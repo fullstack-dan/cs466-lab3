@@ -4,6 +4,7 @@ import re
 PORT = 65432
 BYTE_SIZE = 4096
 TIMEOUT = 30
+ALL_IP = ""
 
 
 def validate_ip(ip):
@@ -60,7 +61,7 @@ def receive_message():
     connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Bind the socket to a specific address and port
-    connection_socket.bind(('localhost', PORT))
+    connection_socket.bind((ALL_IP, PORT))
 
     # Let user know that the server is going to listen on the port
     print("Waiting for message on port " + str(PORT) + "...")
@@ -74,11 +75,13 @@ def receive_message():
 
     # Receive the message and print it, b"" because we need to read bytes in
     message = b""
-    while True:
+    exit_switch = False
+    while not exit_switch:
         data = connect_socket.recv(BYTE_SIZE)
         if not data:
-            break
-        message += data
+            exit_switch = True
+        else:
+            message += data
 
     # Print the message ensuring we convert back to text from bytes
     print("Message:")
