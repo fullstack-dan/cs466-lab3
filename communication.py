@@ -16,8 +16,10 @@ def validate_ip(ip):
         return True
     return re.match(pattern, ip) is not None
 
+
 def clean_input(ip):
     return ip.replace(" ", "").strip()
+
 
 def send_message():
     message = input("Enter a message (max 4096 characters): ")[0:4096]
