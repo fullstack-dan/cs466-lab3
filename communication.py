@@ -11,10 +11,9 @@ def validate_ip(ip):
     pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
 
     # use regex to validate ip
-    if len(ip) > 12:
-        return False
+    if ip is "localhost":
+        return True
     return re.match(pattern, ip) is not None
-
 
 def send_message():
     message = input("Enter a message (max 4096 characters): ")[0:4096]
