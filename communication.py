@@ -36,7 +36,7 @@ def send_message():
         connection_socket.settimeout(TIMEOUT)
 
         # Connect to server
-        connection_socket.connect((ip, str(PORT)))
+        connection_socket.connect((ip, PORT))
 
         # Send data
         print("Sending message...")
