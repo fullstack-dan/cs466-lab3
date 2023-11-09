@@ -12,7 +12,7 @@ def validate_ip(ip):
     pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
 
     # use regex to validate ip
-    if ip is "localhost":
+    if ip == "localhost":
         return True
     return re.match(pattern, ip) is not None
 
