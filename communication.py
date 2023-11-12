@@ -17,11 +17,11 @@ import socket   # Socket library
 import re   # Regular expression library
 
 # Constants
-PORT = 65432    # The port to use for the socket
-BYTE_SIZE = 4096    # The maximum size of the message in bytes
-MAX_IPV4_LENGTH = 15    # The maximum length of an IPv4 address
-TIMEOUT = 30    # The timeout in seconds
-ALL_IP = ""   # The IP address to listen on all interfaces
+PORT = 65432  # The port to use for the socket
+BYTE_SIZE = 4096  # The maximum size of the message in bytes
+MAX_IPV4_LENGTH = 15  # The maximum length of an IPv4 address
+TIMEOUT = 30  # The timeout in seconds
+ALL_IP = ""  # The IP address to listen on all interfaces
 END_MESSAGE = b"#<<END>>#"  # The end message to send to the client
 
 
@@ -121,11 +121,11 @@ def send_message() -> None:
             print("Timeout: Connection to the recipient timed out.")
         except socket.error as e:
             # If an error occurs while sending the message, then print the error
-            print(f"Data sending error: {e}")
-    except (socket.timeout, socket.error, ConnectionRefusedError) as e:
+            print(f"Data sending error: \n{e}")
+    except (socket.timeout, socket.error, ConnectionRefusedError):
         # If an error occurs while connecting to the server, or other errors occur, then print
         # the error
-        print(f"Connection error: {e}")
+        print("Message sending error. Message not sent.")
     finally:
         # In all cases, close the socket if it was created during the function call
         if connection_socket:
@@ -142,17 +142,17 @@ def receive_message() -> None:
         connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except socket.error as e:
         # If an error occurs, print it and exit the program
-        print(f"Socket creation error: {e}")
-        return  # TODO - Should this be return or exit?
+        print(f"Socket creation error: \n{e}")
+        return
 
     try:
         # Bind the socket to a specific address and port
         connection_socket.bind((ALL_IP, PORT))
     except socket.error as e:
         # If an error occurs, print it, close the socket, and return from the function
-        print(f"Socket binding error: {e}")
+        print(f"Another process is occupying the port: \n{e}")
         connection_socket.close()
-        return  # TODO - Should this be return or exit?
+        return
 
     # Let user know that the server is going to listen on the port
     print("Waiting for message on port " + str(PORT) + "...")
@@ -162,18 +162,18 @@ def receive_message() -> None:
         connection_socket.listen()
     except socket.error as e:
         # If an error occurs, print it, close the socket, and return from the function
-        print(f"Socket listening error: {e}")
+        print(f"Socket listening error: \n{e}")
         connection_socket.close()
-        return  # TODO - Should this be return or exit?
+        return
 
     try:
         # Accepting a connection for the user
         connect_socket, address = connection_socket.accept()
     except socket.error as e:
         # If an error occurs, print it, close the socket, and return from the function
-        print(f"Socket accepting error: {e}")
+        print(f"Socket accepting error: \n{e}")
         connection_socket.close()
-        return  # TODO - Should this be return or exit?
+        return
 
     # With the connection established, receive the message
     with connect_socket:
@@ -193,13 +193,14 @@ def receive_message() -> None:
                     exit_switch = True
                 else:
                     # Otherwise, print the message
-                    print(f"Message received: {received.decode('utf-8')}")
+                    print(f"Message received: \n{received.decode('utf-8')}")
+                    print("End of message.")
 
                 # Send the end message to the client to indicate an acknowledgement of the message
                 connect_socket.sendall(END_MESSAGE)
             except socket.error as e:
                 # If an error occurs, print it and exit the incoming socket loop
-                print(f"Socket receiving error: {e}")
+                print(f"Socket receiving error: \n{e}")
                 exit_switch = True
 
 
@@ -217,7 +218,7 @@ def exit_program() -> None:
 def display_menu() -> str:
     """
     Function that displays the menu
-    :return: The menu as a string
+    :return:  A string containing the menu
     """
     return "=== The Python Communicator ===\n" \
            "1) Send message\n" \
@@ -257,8 +258,12 @@ def main() -> None:
     :return: None
     """
 
-    # Call the menu function
-    menu()
+    try:
+        # Call the menu function
+        menu()
+    except KeyboardInterrupt:
+        # If the user presses Ctrl+C, then exit the program
+        exit_program()
 
 
 if __name__ == "__main__":
