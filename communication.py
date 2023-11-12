@@ -1,7 +1,7 @@
 """
 File: communication.py
 Author: Kaushal Patel
-Author: Daniel A  # TODO - Add your name here
+Author: Daniel Aoulou
 Date: 11/12/2023
 Description: This Python script implements a simple client-server communication system using
 sockets. The program allows users to send and receive messages over a network using IPv4
