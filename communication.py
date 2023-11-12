@@ -25,7 +25,7 @@ ALL_IP = ""  # The IP address to listen on all interfaces
 END_MESSAGE = b"#<<END>>#"  # The end message to send to the client
 
 
-def validate_ip(ip: str) -> bool:
+def validate_ip(ip):
     """
     Function that validates an IP address using a regular expression
     :param ip: The IP address to validate
@@ -44,7 +44,7 @@ def validate_ip(ip: str) -> bool:
     return re.match(pattern, ip) is not None
 
 
-def clean_input(ip: str) -> str:
+def clean_input(ip):
     """
     Function that cleans the user input
     :param ip: The user input
@@ -55,7 +55,7 @@ def clean_input(ip: str) -> str:
     return ip.replace(" ", "").strip()
 
 
-def get_user_input(prompt: str, max_length: int) -> str:
+def get_user_input(prompt, max_length):
     """
     Function that gets user input
     :param prompt: The prompt to display to the user
@@ -68,7 +68,7 @@ def get_user_input(prompt: str, max_length: int) -> str:
     return user_input
 
 
-def send_message() -> None:
+def send_message():
     """
     Function that sends a message to a server
     :return: None
@@ -132,7 +132,7 @@ def send_message() -> None:
             connection_socket.close()
 
 
-def receive_message() -> None:
+def receive_message():
     """
     Function that receives a message from a client and prints it to the console
     :return: None
@@ -204,7 +204,7 @@ def receive_message() -> None:
                 exit_switch = True
 
 
-def exit_program() -> None:
+def exit_program():
     """
     Function that exits the program
     :return: None
@@ -215,7 +215,7 @@ def exit_program() -> None:
     exit(0)
 
 
-def display_menu() -> str:
+def display_menu():
     """
     Function that displays the menu
     :return:  A string containing the menu
@@ -226,7 +226,7 @@ def display_menu() -> str:
            "0) Exit"
 
 
-def menu() -> None:
+def menu():
     """
     Menu function that displays the menu and handles the user input
     :return: None
@@ -252,7 +252,7 @@ def menu() -> None:
             print("Error, invalid input")
 
 
-def main() -> None:
+def main():
     """
     Main function of the program that calls the menu function to start the program loop
     :return: None
