@@ -1,0 +1,1 @@
+Daniel and I worked well together. For the initial Python file and code development, we used JetBrains' IDE to share the workspace and pair program. We utilized Git for the project and met in person to work on the lab handout questions. I enjoyed working with Daniel.
